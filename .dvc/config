@@ -3,4 +3,4 @@
     autostage = true
     remote = dogs
 ['remote "dogs"']
-    url = s3://mhema-dog-breeds-bucket
+    url = s3://abhiya-emlo-bucket
