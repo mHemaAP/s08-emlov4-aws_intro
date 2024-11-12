@@ -12,7 +12,7 @@ train:
 	echo "Best Hparams"
 	cat multirun/*/*/optimization_results.yaml
 	echo "pushing to S3"
-	aws s3 cp multirun/ s3://mhema-dog-breeds-bucket/training-$$(date +"%m-%d-%H%M%S")/ --recursive
+	aws s3 cp multirun/ s3://abhiya-emlo-bucket/training-$$(date +"%m-%d-%H%M%S")/ --recursive
 
 eval:
 	HYDRA_FULL_ERROR=1 python src/eval.py 
