@@ -1,0 +1,76 @@
+defaults:
+  - _self_
+  - data: dogs
+  # - model: mamba
+  - callbacks: default
+  - logger: csv # set logger here or use command line (e.g. `python train.py logger=tensorboard`)
+  - trainer: default
+  - paths: default
+  
+
+# Override MOdel
+# .overrides.yaml
+# - model.dims=[6,12,24,36]
+# - model.depths=[3,3,15,3]
+# - model.head_fn=default
+# - model.conv_ratio=1.2
+# - data.batch_size=16
+
+model:
+  _target_: src.models.dogs_classifier.DogsBreedClassifier
+  dims: 
+    - 6
+    - 12
+    - 24
+    - 36
+  depths: 
+    - 3
+    - 3
+    - 15
+    - 3
+  head_fn: default
+  conv_ratio: 1.2
+  in_chans: 3
+  num_classes: 10
+  pretrained: false  # always 
+  model_name: 'Mamba'   # stick to mamba based models
+  lr: 1e-3
+  weight_decay: 1e-5
+  scheduler_factor: 0.1
+  scheduler_patience: 5
+  min_lr: 1e-6
+  trainable: false
+ckpt_path: ${paths.root_dir}/samples/checkpoints/epoch_019.ckpt
+
+
+data:
+  batch_size: 16
+  num_workers: 12
+  pin_memory: True
+
+
+trainer:
+  min_epochs: 1
+  max_epochs: 20
+  # checkpoint_callback:
+  #   best_model_path: ${paths.root_dir}/samples/checkpoints/epoch_019.ckpt
+
+
+callbacks:
+  model_checkpoint:
+    monitor: "val/acc"
+    mode: "max"
+    save_top_k: 1
+    save_last: false
+
+tags:
+  - eval
+
+task_name: "eval"
+train: False
+test: True
+
+
+
+
+# /home/muthu/GitHub/DogBreedsClassifier/samples/checkpoints/epoch_019.ckpt

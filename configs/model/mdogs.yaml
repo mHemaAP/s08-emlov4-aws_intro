@@ -1,0 +1,11 @@
+_target_: src.models.dogs_classifier.DogsBreedClassifier
+
+model_name: "resnet18"
+num_classes: 10
+pretrained: true
+lr: 1e-3
+weight_decay: 1e-5
+scheduler_factor: 0.1
+scheduler_patience: 10
+min_lr: 1e-6
+trainable: false
